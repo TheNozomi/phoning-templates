@@ -1,4 +1,4 @@
-import { Button, Group } from "@mantine/core";
+import { Button, Group } from '@mantine/core';
 
 export default function IndexPage() {
   return (
