@@ -68,7 +68,7 @@ export function CalendarEntry(props: CalendarEntryProps) {
         </Text>
         <Divider size="sm" color="gray" mt={6} />
         <Box py={5}>
-          <Text color="#636363" className={textFont.className}>
+          <Text size="sm" color="#636363" className={textFont.className}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
           </Text>
         </Box>
@@ -76,7 +76,7 @@ export function CalendarEntry(props: CalendarEntryProps) {
           <>
             <Divider size="sm" color="gray" />
             <Box py={2}>
-              <Text color="blue" className={textFont.className}>
+              <Text size="xs" color="blue" className={textFont.className}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>{translatorNotes}</ReactMarkdown>
               </Text>
             </Box>
