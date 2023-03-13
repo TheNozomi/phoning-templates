@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Flex, Space, Text, Title } from '@mantine/core';
+import { Box, Divider, Flex, Space, Text, Title } from '@mantine/core';
 import { Noto_Sans_KR, Roboto } from 'next/font/google';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
@@ -57,32 +57,29 @@ export function CalendarEntry(props: CalendarEntryProps) {
       </Title>
       <Space h={35} />
       <CalendarContentContainer>
-        <Text className={textFont.className} size="sm" fw={500} color="#808080">
+        <Text className={textFont.className} size="sm" mb={5} fw={500} color="#808080">
           {member}
         </Text>
-        <Space h={2} />
-        <Title order={4}>{title}</Title>
-        <Space h={2} />
-        <Text size="xs" fw={500}>{(date ?? new Date()).toLocaleDateString('es-AR', {
-          dateStyle: 'full',
-        })}
+        <Title order={4} my={2}>{title}</Title>
+        <Text size="xs" fw={500}>
+          {(date ?? new Date()).toLocaleDateString('es-AR', {
+            dateStyle: 'full',
+          })}
         </Text>
-        <hr />
-        <Space h={1} />
-        <div>
+        <Divider size="sm" color="gray" mt={6} />
+        <Box py={5}>
           <Text color="#636363" className={textFont.className}>
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{text}</ReactMarkdown>
           </Text>
-        </div>
+        </Box>
         {translatorNotes && (
           <>
-            <Space h={1} />
-            <hr />
-            <div>
+            <Divider size="sm" color="gray" />
+            <Box py={2}>
               <Text color="blue" className={textFont.className}>
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{translatorNotes}</ReactMarkdown>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{translatorNotes}</ReactMarkdown>
               </Text>
-            </div>
+            </Box>
           </>
         )}
       </CalendarContentContainer>
