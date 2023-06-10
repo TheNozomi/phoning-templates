@@ -1,4 +1,6 @@
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+
 import { Box, Divider, Flex, Space, Text, Title } from '@mantine/core';
 import { Noto_Sans_KR, Roboto } from 'next/font/google';
 import Image from 'next/image';
@@ -6,6 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import InstagramIcon from '../../../assets/icons/Instagram_icon.png';
 import TwitterIcon from '../../../assets/icons/Twitter-logo.svg';
+import { members } from '../../../data/members.json';
 
 const CalendarEntryContainer = styled.div`
   background: linear-gradient(to bottom, #20f840, #ffffff 30%);
@@ -15,6 +18,13 @@ const CalendarEntryContainer = styled.div`
   padding-right: 20px;
   padding-top: 30px;
   padding-bottom: 30px;
+  ${({ forceAspectRatio }: { forceAspectRatio?: boolean }) =>
+    forceAspectRatio &&
+    css`
+      aspect-ratio: 9 / 16;
+      /* Additional styles specific to the aspect ratio */
+      /* ... */
+    `}
   @media (orientation: landscape) {
     max-width: 30vw;
   }
@@ -48,17 +58,17 @@ const textFont = Noto_Sans_KR({
 });
 
 export function CalendarEntry(props: CalendarEntryProps) {
-  const { member, title, date, text, translatorNotes, showSocials } = props;
+  const { member, title, date, text, translatorNotes, showSocials, forceAspectRatio } = props;
 
   return (
-    <CalendarEntryContainer id="calendarEntry">
+    <CalendarEntryContainer id="calendarEntry" forceAspectRatio={forceAspectRatio}>
       <Title order={2} mx={2} color="black" className={titleFont.className}>
         📅 Calendario
       </Title>
       <Space h={35} />
       <CalendarContentContainer>
         <Text className={textFont.className} size="sm" mb={5} fw={500} color="#808080">
-          {member}
+          {member?.calendarName}
         </Text>
         <Title order={4} my={2}>{title}</Title>
         <Text size="xs" fw={500}>
@@ -99,10 +109,11 @@ export function CalendarEntry(props: CalendarEntryProps) {
 }
 
 export interface CalendarEntryProps {
-  member: string;
+  member?: typeof members[number];
   title: string;
   date: Date | null;
   text: string;
   translatorNotes?: string;
   showSocials?: boolean;
+  forceAspectRatio?: boolean;
 }
