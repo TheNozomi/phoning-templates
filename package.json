@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@carbon/icons-react": "^11.21.0",
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
@@ -23,6 +24,7 @@
     "html-to-image": "^1.11.11",
     "next": "13.4.4",
     "react": "18.2.0",
+    "react-device-frameset": "^1.3.2",
     "react-dom": "18.2.0",
     "react-emoji-render": "^2.0.1",
     "react-markdown": "^8.0.7",
@@ -36,6 +38,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@types/carbon__icons-react": "^11",
     "@types/jest": "^29.5.2",
     "@types/node": "^18.16.17",
     "@types/react": "18.2.11",

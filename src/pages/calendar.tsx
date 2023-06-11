@@ -5,7 +5,7 @@ import { toBlob } from 'html-to-image';
 import { useEffect, useState } from 'react';
 import { CalendarEntry } from '../components/phoning/calendar';
 import { FormContainer } from '../components/shared';
-import { members } from '../data/members.json';
+import data from '../data/members.json';
 
 export default function CalendarPage() {
   const [member, setMember] = useState<string | null>('minji');
@@ -18,7 +18,7 @@ export default function CalendarPage() {
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
   const [twitterMessage, setTwitterMessage] = useState<string>('');
 
-  const formMembers = members.map((_member) => ({
+  const formMembers = data.members.map((_member) => ({
     value: _member.name.toLowerCase(),
     label: _member.name,
   }));
@@ -43,7 +43,7 @@ export default function CalendarPage() {
   };
 
   useEffect(() => {
-    const memberData = members.find((m) => m.name.toLowerCase() === member);
+    const memberData = data.members.find((m) => m.name.toLowerCase() === member);
 
     const twMessage = `📅 ${memberData?.emoji} ${formatDate(date)}\n#${memberData?.name} en el calendario de Phoning\n\n#NewJeans #뉴진스 #${memberData?.name} #${memberData?.hangul}`;
     setTwitterMessage(twMessage);
@@ -120,7 +120,7 @@ export default function CalendarPage() {
           />
         </FormContainer>
         <CalendarEntry
-          member={members.find((m) => m.name.toLowerCase() === member)}
+          member={data.members.find((m) => m.name.toLowerCase() === member)}
           title={title}
           date={date}
           text={content}

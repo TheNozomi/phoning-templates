@@ -8,7 +8,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import InstagramIcon from '../../../assets/icons/Instagram_icon.png';
 import TwitterIcon from '../../../assets/icons/Twitter-logo.svg';
-import { members } from '../../../data/members.json';
+import data from '../../../data/members.json';
 
 const CalendarEntryContainer = styled.div`
   background: linear-gradient(to bottom, #20f840, #ffffff 30%);
@@ -109,7 +109,7 @@ export function CalendarEntry(props: CalendarEntryProps) {
 }
 
 export interface CalendarEntryProps {
-  member?: typeof members[number];
+  member?: typeof data.members[number];
   title: string;
   date: Date | null;
   text: string;

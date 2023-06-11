@@ -1,6 +1,7 @@
+import { MantineProvider } from '@mantine/core';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { MantineProvider } from '@mantine/core';
+import 'react-device-frameset/styles/marvel-devices.min.css';
 
 export default function App(props: AppProps) {
   const { Component, pageProps } = props;

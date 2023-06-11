@@ -4,31 +4,36 @@
       "name": "Minji",
       "emoji": "🐻",
       "hangul": "민지",
-      "calendarName": "민지Minji🧸"
+      "calendarName": "민지Minji🧸",
+      "chatProfilePic": "https://placekitten.com/100/100"
     },
     {
       "name": "Hanni",
       "emoji": "🐰",
       "hangul": "하니",
-      "calendarName": "하니_hanni_:)"
+      "calendarName": "하니_hanni_:)",
+      "chatProfilePic": "https://placekitten.com/200/200"
     },
     {
       "name": "Haerin",
       "hangul": "해린",
       "emoji": "🐹",
-      "calendarName": "해린_haerin"
+      "calendarName": "해린_haerin",
+      "chatProfilePic": "https://placekitten.com/300/300"
     },
     {
       "name": "Danielle",
       "hangul": "다니엘",
       "emoji": "🐶",
-      "calendarName": "다니엘_Danielle🌻"
+      "calendarName": "다니엘_Danielle🌻",
+      "chatProfilePic": "https://placekitten.com/400/400"
     },
     {
       "name": "Hyein",
       "emoji": "🐣",
       "hangul": "혜인",
-      "calendarName": "혜인:)Hyein🐣"
+      "calendarName": "혜인:)Hyein🐣",
+      "chatProfilePic": "https://placekitten.com/500/500"
     }
   ]
 }
