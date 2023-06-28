@@ -21,11 +21,13 @@
     "dayjs": "^1.11.8",
     "file-saver": "^2.0.5",
     "html-to-image": "^1.11.11",
+    "js-base64": "^3.7.5",
     "next": "13.4.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-emoji-render": "^2.0.1",
     "react-markdown": "^8.0.7",
+    "react-qr-code": "^2.0.11",
     "remark-gfm": "^3.0.1"
   },
   "devDependencies": {

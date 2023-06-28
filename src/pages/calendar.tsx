@@ -1,13 +1,22 @@
-import { Button, Checkbox, Container, Flex, Select, Space, Stack, Textarea, TextInput, Title } from '@mantine/core';
+import { Box, Button, Checkbox, Container, Flex, Group, Modal, Select, Space, Stack, Text, Textarea, TextInput, Title } from '@mantine/core';
 import { DateInput } from '@mantine/dates';
+import { useClipboard, useDisclosure } from '@mantine/hooks';
 import { saveAs } from 'file-saver';
 import { toBlob } from 'html-to-image';
+import { Base64 } from 'js-base64';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import QRCode from 'react-qr-code';
 import { CalendarEntry } from '../components/phoning/calendar';
 import { FormContainer } from '../components/shared';
 import { members } from '../data/members.json';
 
 export default function CalendarPage() {
+  const router = useRouter();
+  const [currentURL, setCurrentURL] = useState<string>('');
+  const [opened, { open, close }] = useDisclosure(false);
+  const clipboard = useClipboard({ timeout: 500 });
+
   const [member, setMember] = useState<string | null>('minji');
   const [title, setTitle] = useState<string>('🌧️🌧️ Título de prueba 🌧️🌧️');
   const [date, setDate] = useState<Date | null>(new Date());
@@ -48,6 +57,59 @@ export default function CalendarPage() {
     const twMessage = `📅 ${memberData?.emoji} ${formatDate(date)}\n#${memberData?.name} en el calendario de Phoning\n\n#NewJeans #뉴진스 #${memberData?.name} #${memberData?.hangul}`;
     setTwitterMessage(twMessage);
   }, [member, title, date]);
+
+  const serializeStateToURL = () => {
+    const state: ICalendarState = {
+      member,
+      title,
+      date: date?.toISOString() || new Date().toISOString(),
+      content,
+      translatorNotes,
+      showSocials,
+      forceAspectRatio,
+    };
+
+    const json = JSON.stringify(state);
+    const b64 = Base64.encode(json);
+
+    router.push({
+      pathname: router.pathname,
+      query: {
+        state: b64,
+      },
+    });
+
+    open();
+  };
+
+  // Set current URL in local state when router state changes
+  useEffect(() => {
+    const url = `${window.location.origin}${router.asPath}`;
+    setCurrentURL(url);
+  }, [router.asPath]);
+
+  // Load state from URL, if present
+  useEffect(() => {
+    const { query } = router;
+
+    if (typeof query.state === 'string') {
+      try {
+        const decodedState = Base64.decode(query.state);
+        const state: ICalendarState = JSON.parse(decodedState);
+        console.log('Loading state from URL', state);
+
+        setMember(state.member);
+        setTitle(state.title);
+        setDate(new Date(state.date));
+        setContent(state.content);
+        setTranslatorNotes(state.translatorNotes);
+        setShowSocials(state.showSocials);
+        setForceAspectRatio(state.forceAspectRatio);
+      } catch (err) {
+        console.error('Error restoring state from URL', err);
+      }
+    }
+  }, [router]);
 
   return (
     <Container fluid px={6} py={12}>
@@ -102,12 +164,20 @@ export default function CalendarPage() {
             />
           </Stack>
 
-          <Button
-            disabled={isDownloading}
-            onClick={downloadImage}
-          >
-            {isDownloading ? 'Procesando...' : 'Descargar imagen'}
-          </Button>
+          <Group>
+            <Button
+              disabled={isDownloading}
+              onClick={downloadImage}
+            >
+              {isDownloading ? 'Procesando...' : 'Descargar imagen'}
+            </Button>
+
+            <Button
+              onClick={serializeStateToURL}
+            >
+              Generar URL
+            </Button>
+          </Group>
 
           <Space h="md" />
 
@@ -129,6 +199,42 @@ export default function CalendarPage() {
           forceAspectRatio={forceAspectRatio}
         />
       </Flex>
+
+      <Modal opened={opened} onClose={close} title={<Title order={3}>Compartir</Title>} centered>
+        <Flex direction="column" gap="sm">
+          <Text>
+            Usa este código QR para compartir o continuar en otro dispositivo:
+          </Text>
+
+          <Flex justify="center">
+
+            <Box bg="white" p="sm" display="inline-flex">
+              <QRCode value={currentURL} />
+            </Box>
+          </Flex>
+
+          <Text>También puedes copiar y pegar la URL:</Text>
+          <Group>
+            <TextInput value={currentURL} readOnly style={{ flexGrow: 1 }} />
+            <Button
+              color={clipboard.copied ? 'teal' : 'blue'}
+              onClick={() => clipboard.copy(currentURL)}
+            >
+              {clipboard.copied ? 'Copiado!' : 'Copiar'}
+            </Button>
+          </Group>
+        </Flex>
+      </Modal>
     </Container>
   );
+}
+
+interface ICalendarState {
+  member: string | null,
+  title: string,
+  date: string,
+  content: string,
+  translatorNotes: string,
+  showSocials: boolean,
+  forceAspectRatio: boolean
 }
