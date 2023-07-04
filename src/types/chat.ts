@@ -6,6 +6,7 @@ export interface IChatAttachment {
 }
 
 export interface BaseChatEntry {
+  id: string;
   member: Member;
   timestamp: Date;
 }

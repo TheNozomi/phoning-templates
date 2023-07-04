@@ -26,7 +26,7 @@ export function ChatUI(props: IChatUIProps) {
   const { member, messages } = props;
 
   return (
-    <ChatUIContainer {...props}>
+    <ChatUIContainer {...props} ref={props.innerRef}>
       <ChatHeader member={member} />
       <ChatMessages messages={messages} />
       <ChatInput />
@@ -38,5 +38,5 @@ export interface IChatUIProps {
   member: Member;
   messages: IChatEntry[];
   forceAspectRatio?: boolean;
-  ref?: React.Ref<HTMLDivElement>;
+  innerRef?: React.Ref<HTMLDivElement>;
 }
