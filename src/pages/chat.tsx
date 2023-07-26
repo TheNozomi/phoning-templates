@@ -1,6 +1,6 @@
 import { Box, Button, Container, Flex, Group, Select, Stack, Title } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DeviceFrameset } from 'react-device-frameset';
 import { v4 as randomUUID } from 'uuid';
 import { MessageCard } from '../components/chat/MessageCard';
@@ -9,6 +9,7 @@ import { FormContainer } from '../components/shared';
 import data from '../data/members.json';
 import type { IChatEntry } from '../types';
 import { Member } from '../types';
+import { useMessageStore } from '../stores/messages';
 
 export default function ChatPage() {
   const isLandscape = useMediaQuery('(orientation: landscape)');
@@ -18,6 +19,14 @@ export default function ChatPage() {
     value: _member.name.toLowerCase(),
     label: _member.name,
   }));
+
+  const [messagesFromStore, addMessage, updateMessage] = useMessageStore((state) => [
+    state.messages, state.addMessage, state.updateMessage,
+  ]);
+
+  useEffect(() => {
+    console.log('messagesFromStore', messagesFromStore);
+  }, [messagesFromStore]);
 
   const [messages, setMessages] = useState<IChatEntry[]>([
     {
@@ -107,9 +116,21 @@ export default function ChatPage() {
     const newMessages = structuredClone(messages);
     newMessages[originalMessageIdx] = message;
     setMessages(newMessages);
+
+    // todo: make this less ugly
+    updateMessage(message);
   };
 
   const chatUIRef = useRef<HTMLDivElement>(null);
+
+  const handleAddMessage = () => {
+    const newMessage = {
+      member: data.members.find((m) => m.name.toLowerCase() === member) as Member,
+      content: '',
+      timestamp: new Date(),
+    };
+    addMessage(newMessage);
+  };
 
   return (
     <Container fluid px={isLandscape ? 15 : 2} py={12}>
@@ -128,11 +149,11 @@ export default function ChatPage() {
                 <Title order={3} style={{ justifySelf: 'flex-start' }}>Mensajes</Title>
                 <Group>
                   <Button>DL</Button>
-                  <Button>Add</Button>
+                  <Button onClick={handleAddMessage}>Add</Button>
                 </Group>
               </Flex>
 
-              {messages.map((message) => (
+              {messagesFromStore.map((message) => (
                 <MessageCard key={message.id} message={message} onUpdate={handleMessageUpdate} />
               ))}
             </Box>
@@ -144,7 +165,7 @@ export default function ChatPage() {
               <ChatUI
                 innerRef={chatUIRef}
                 member={data.members.find((m) => m.name.toLowerCase() === member) as Member}
-                messages={messages}
+                messages={messagesFromStore}
                 forceAspectRatio
               />
             </DeviceFrameset>
@@ -152,7 +173,7 @@ export default function ChatPage() {
             <ChatUI
               innerRef={chatUIRef}
               member={data.members.find((m) => m.name.toLowerCase() === member) as Member}
-              messages={messages}
+              messages={messagesFromStore}
               forceAspectRatio
             />
           )}

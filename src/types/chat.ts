@@ -5,20 +5,10 @@ export interface IChatAttachment {
   url: string;
 }
 
-export interface BaseChatEntry {
+export interface IChatEntry {
   id: string;
   member: Member;
   timestamp: Date;
+  content?: string;
+  attachment?: IChatAttachment;
 }
-
-export interface TextChatEntry extends BaseChatEntry {
-  content: string;
-  attachment?: never;
-}
-
-export interface AttachmentChatEntry extends BaseChatEntry {
-  content?: never;
-  attachment: IChatAttachment; // TODO: messages can have more than one attachment?
-}
-
-export type IChatEntry = TextChatEntry | AttachmentChatEntry;
