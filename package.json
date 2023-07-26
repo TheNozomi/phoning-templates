@@ -19,7 +19,7 @@
     "@mantine/hooks": "6.0.13",
     "@mantine/next": "6.0.13",
     "@types/file-saver": "^2.0.5",
-    "dayjs": "^1.11.8",
+    "dayjs": "^1.11.9",
     "file-saver": "^2.0.5",
     "html-to-image": "^1.11.11",
     "jotai": "^2.2.1",
