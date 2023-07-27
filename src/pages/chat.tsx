@@ -2,15 +2,15 @@ import { Box, Button, Container, Flex, Group, Modal, Select, Stack, TextInput, T
 import { useClipboard, useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { useRef, useState } from 'react';
 import { DeviceFrameset } from 'react-device-frameset';
+import { toBlob } from 'html-to-image';
+import saveAs from 'file-saver';
+import QRCode from 'react-qr-code';
 import { MessageCard } from '../components/chat/MessageCard';
 import { ChatUI } from '../components/phoning/chat';
 import { FormContainer } from '../components/shared';
 import data from '../data/members.json';
 import { Member } from '../types';
 import { useMessageStore } from '../stores/messages';
-import { toBlob } from 'html-to-image';
-import saveAs from 'file-saver';
-import QRCode from 'react-qr-code';
 
 export default function ChatPage() {
   const isLandscape = useMediaQuery('(orientation: landscape)');
@@ -115,13 +115,13 @@ export default function ChatPage() {
           <Flex justify="center">
 
             <Box bg="white" p="sm" display="inline-flex">
-              <QRCode value={'test'} />
+              <QRCode value="test" />
             </Box>
           </Flex>
 
           <Text>También puedes copiar y pegar la URL:</Text>
           <Group>
-            <TextInput value={'test'} readOnly style={{ flexGrow: 1 }} />
+            <TextInput value="test" readOnly style={{ flexGrow: 1 }} />
             <Button
               color={clipboard.copied ? 'teal' : 'blue'}
               onClick={() => clipboard.copy('test')}

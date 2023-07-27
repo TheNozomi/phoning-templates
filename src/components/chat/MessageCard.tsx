@@ -7,7 +7,9 @@ import { IChatEntry, Member } from '../../types';
 import { useMessageStore } from '../../stores/messages';
 
 export function MessageCard({ message }: MessageCardProps) {
-  const [updateMessage, deleteMessage] = useMessageStore((state) => [state.updateMessage, state.deleteMessage]);
+  const [updateMessage, deleteMessage] = useMessageStore((state) => [
+    state.updateMessage, state.deleteMessage
+  ]);
 
   const [member, setMember] = useState<string>(message.member.name.toLowerCase());
   const [time, setTime] = useState<Dayjs>(dayjs(message.timestamp));
