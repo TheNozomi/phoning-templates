@@ -1,8 +1,10 @@
 import { ChevronLeft, OverflowMenuVertical } from '@carbon/icons-react';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { Box, BoxProps, Image, Text, createPolymorphicComponent } from '@mantine/core';
+import { Box, BoxProps, Text, createPolymorphicComponent } from '@mantine/core';
+import Image from 'next/image';
 import { Member } from '../../../types';
+import { getAvatar } from '../../../utils/avatars';
 
 const _ChatHeaderContainer = styled(Box)`
   background: linear-gradient(180deg, #FFFF2C 0%, #FFFF81 100%);
@@ -44,12 +46,14 @@ export function ChatHeader({ member }: { member: Member }) {
         <ChevronLeft color="#000" size={32} />
       </HeaderButton>
       <Image
-        ml={16}
-        src={member.chatProfilePic}
+        src={getAvatar(member.name)}
         alt={`Avatar de ${member.name}`}
-        width={40}
-        height={40}
-        radius="xl"
+        style={{
+          marginLeft: 16,
+          borderRadius: '50%',
+          width: 40,
+          height: 40,
+        }}
       />
       <Text fw={700} size="lg" ml={8} color="#000">
         {member.name} {member.emoji}

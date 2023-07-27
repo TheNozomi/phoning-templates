@@ -1,5 +1,8 @@
 import styled from '@emotion/styled';
-import { Image, Text } from '@mantine/core';
+import { Text } from '@mantine/core';
+import Image from 'next/image';
+import { getAvatar } from '../../../utils/avatars';
+
 import type { IChatEntry } from '../../../types';
 import { ChatBubble } from './ChatBubble';
 
@@ -27,7 +30,15 @@ export function ChatMessageGroup({ messages }: { messages: IChatEntry[] }) {
 
   return (
     <MessageGroupContainer>
-      <Image mt={2} src={member.chatProfilePic} alt={`Avatar de ${member}`} width={32} height={32} radius="xl" />
+      <Image
+        src={getAvatar(member.name)}
+        alt={`Avatar de ${member.name}`}
+        style={{
+          borderRadius: '50%',
+          width: 32,
+          height: 32,
+        }}
+      />
       <BubbleContainer>
         <TextContainer>
           <Text color="#000" size={14}>{member.name}</Text>
