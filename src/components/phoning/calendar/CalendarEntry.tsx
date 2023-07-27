@@ -1,14 +1,12 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
-import { Box, Divider, Flex, Space, Text, Title } from '@mantine/core';
+import { Box, Divider, Space, Text, Title } from '@mantine/core';
 import { Noto_Sans_KR, Roboto } from 'next/font/google';
-import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import InstagramIcon from '../../../assets/icons/Instagram_icon.png';
-import TwitterIcon from '../../../assets/icons/Twitter-logo.svg';
 import data from '../../../data/members.json';
+import { SocialIcons } from '../../shared/SocialIcons';
 
 const CalendarEntryContainer = styled.div`
   background: linear-gradient(to bottom, #20f840, #ffffff 30%);
@@ -94,15 +92,7 @@ export function CalendarEntry(props: CalendarEntryProps) {
         )}
       </CalendarContentContainer>
       <CalendarEntryFooter>
-        {showSocials && (
-          <Flex align="center" justify="right" gap={8}>
-            <Image width="24" src={InstagramIcon} alt="Instagram icon" />
-            <Image width="24" src={TwitterIcon} alt="Twitter icon" />
-            <Text align="right" size="lg" color="blue">
-              @newjeansar
-            </Text>
-          </Flex>
-        )}
+        {showSocials && <SocialIcons />}
       </CalendarEntryFooter>
     </CalendarEntryContainer>
   );
