@@ -26,7 +26,7 @@ export function ChatUI(props: IChatUIProps) {
   const { member, messages } = props;
 
   return (
-    <ChatUIContainer {...props} ref={props.innerRef}>
+    <ChatUIContainer id="chatUI" {...props} ref={props.innerRef}>
       <ChatHeader member={member} />
       <ChatMessages messages={messages} />
       <ChatInput />

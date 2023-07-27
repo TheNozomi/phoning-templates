@@ -3,9 +3,7 @@ import { Image, Text } from '@mantine/core';
 import type { IChatEntry } from '../../../types';
 
 const ChatBubbleContainer = styled.div`
-  margin-top: 3px;
-  margin-bottom: 3px;
-  max-width: 90%;
+  margin: 3px 9px 3px 0;
   display: flex;
   align-items: flex-end;
   gap: 7px;

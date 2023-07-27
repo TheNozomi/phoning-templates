@@ -7,14 +7,6 @@ const MessagesContainer = styled.div`
   padding-left: 16px;
   padding-right: 16px;
   height: 84%;
-  overflow-y: scroll;
-  scrollbar-width: none;
-  /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none;
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const groupMessages = (messages: IChatEntry[], maxMessagesPerGroup: number): IChatEntry[][] => {
