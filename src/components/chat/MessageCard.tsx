@@ -8,7 +8,7 @@ import { useMessageStore } from '../../stores/messages';
 
 export function MessageCard({ message }: MessageCardProps) {
   const [updateMessage, deleteMessage] = useMessageStore((state) => [
-    state.updateMessage, state.deleteMessage
+    state.updateMessage, state.deleteMessage,
   ]);
 
   const [member, setMember] = useState<string>(message.member.name.toLowerCase());
