@@ -7,6 +7,7 @@ interface MessageStore {
   addMessage: (message: Omit<IChatEntry, 'id'>) => void;
   updateMessage: (message: IChatEntry) => void;
   patchMessage: (message: Partial<IChatEntry>) => void;
+  deleteMessage: (id: string) => void;
 }
 
 export const useMessageStore = create<MessageStore>(
@@ -33,6 +34,10 @@ export const useMessageStore = create<MessageStore>(
         messages: state.messages.map((m) =>
           m.id === message.id ? { ...m, ...message } : m
         ),
+      })),
+    deleteMessage: (id: string) =>
+      set((state) => ({
+        messages: state.messages.filter((m) => m.id !== id),
       })),
   })
 );

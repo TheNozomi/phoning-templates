@@ -4,12 +4,16 @@ import { useEffect, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import data from '../../data/members.json';
 import { IChatEntry, Member } from '../../types';
+import { useMessageStore } from '../../stores/messages';
 
-export function MessageCard({ message, onUpdate }: MessageCardProps) {
+export function MessageCard({ message }: MessageCardProps) {
+  const [updateMessage, deleteMessage] = useMessageStore((state) => [state.updateMessage, state.deleteMessage]);
+
   const [member, setMember] = useState<string>(message.member.name.toLowerCase());
   const [time, setTime] = useState<Dayjs>(dayjs(message.timestamp));
   const [timeString, setTimeString] = useState<string>('');
   const [content, setContent] = useState(message.content);
+  const [attachmentURL, setAttachmentURL] = useState(message.attachment?.url || '');
   const formMembers = data.members.map((_member) => ({
     value: _member.name.toLowerCase(),
     label: _member.name,
@@ -19,11 +23,16 @@ export function MessageCard({ message, onUpdate }: MessageCardProps) {
     const msg: IChatEntry = {
       ...message,
       member: data.members.find((m) => m.name.toLowerCase() === member) as Member,
+      timestamp: time.toDate(),
       content,
+      attachment: attachmentURL ? {
+        url: attachmentURL,
+        type: 'image',
+      } : undefined,
     };
 
-    onUpdate(msg);
-  }, [member, content]);
+    updateMessage(msg);
+  }, [member, content, time, attachmentURL]);
 
   const updateTime = (value: string) => {
     const [hours, minutes] = value.split(':');
@@ -34,6 +43,10 @@ export function MessageCard({ message, onUpdate }: MessageCardProps) {
 
     setTime(newTime);
     setTimeString(newTime.format('HH:mm'));
+  };
+
+  const handleDelete = () => {
+    deleteMessage(message.id);
   };
 
   return (
@@ -58,16 +71,15 @@ export function MessageCard({ message, onUpdate }: MessageCardProps) {
         <Card.Section inheritPadding>
           <Stack my={6}>
             <Textarea placeholder="Mensaje" value={content} onChange={(e) => setContent(e.target.value)} />
-            <TextInput placeholder="URL adjunto" />
+            <TextInput type="url" placeholder="URL adjunto" value={attachmentURL} onChange={(e) => setAttachmentURL(e.target.value)} />
           </Stack>
         </Card.Section>
       </Card>
-      <Button>Delete</Button>
+      <Button variant="light" color="red" onClick={handleDelete}>Eliminar</Button>
     </Group>
   );
 }
 
 interface MessageCardProps {
-  message: IChatEntry,
-  onUpdate: (message: IChatEntry) => void;
+  message: IChatEntry
 }
